@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request
 import pickle
 import numpy as np
@@ -7,30 +8,32 @@ model = pickle.load(open('model.pkl', 'rb'))
 
 # predict function
 def ValuePredictor(to_predict_list):
-    to_predict = np.array(to_predict_list).reshape(1, 5)
+    to_predict = np.array(to_predict_list).reshape(1, 4)
     result = model.predict(to_predict)
     return result[0]
 
 
 app = Flask(__name__)
 
-
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return 'Hello, Alexandre!'
 
-@app.route('/a')
-def hello_worsld():
-    return 'Hasdfd!'
-
-# predict route
 @app.route('/predict', methods=['POST'])
 def predict():
-    to_predict_list = request.get_json()['input']
-    to_predict_list = list(map(int, to_predict_list))
+    to_predict_list = request.get_json()
+    to_predict_list = [to_predict_list['sepal_length'], to_predict_list['sepal_width'],
+                       to_predict_list['petal_length'], to_predict_list['petal_width']]
+    to_predict_list = list(map(float, to_predict_list))
     result = ValuePredictor(to_predict_list)
-    return result
+    return {'prediction': result}
+
+# for cloud run
+# if __name__ == '__main__':
+#     app.run(port=int(os.environ.get("PORT", 8080)),host='0.0.0.0',debug=True)
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
 
 # enable debug
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
