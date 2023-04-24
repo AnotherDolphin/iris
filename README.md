@@ -25,4 +25,4 @@ The app is dockerized and can be run locally or deployed to a cloud provider.
 
 The app is deployed on Google Cloud Run and can be accessed at the following URL:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+https://iris-xld6dcishq-uc.a.run.app/
