@@ -26,3 +26,5 @@ The app is dockerized and can be run locally or deployed to a cloud provider.
 The app is deployed on Google Cloud Run and can be accessed at the following URL:
 
 https://iris-xld6dcishq-uc.a.run.app/
+
+Prediction requests can be made to https://iris-xld6dcishq-uc.a.run.app/predict using the same format as above.
